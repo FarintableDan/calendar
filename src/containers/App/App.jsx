@@ -8,7 +8,6 @@ import { BaseLayout } from "../../components/BaseLayout/BaseLayout";
 
 function App() {
   const notificationQue = useSelector((state) => state.notificationQue);
-  console.log(notificationQue);
   return (
     <div className="App">
       <BaseLayout>

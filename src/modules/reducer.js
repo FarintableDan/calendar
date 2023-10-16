@@ -30,12 +30,7 @@ export default function mainReducer(state = initialState, { type, payload }) {
           ...spreadAll(Object.values(currentDate)),
           { ...payload.fullDate, id: counter },
         ]
-          .filter((i) => {
-            console.log(i);
-            return (
-              timeToGetNotification(i.from) - timeToGetNotification(dayjs()) > 0
-            );
-          })
+          .filter((i) => timeToGetNotification(i.from) - timeToGetNotification(dayjs()) > 0)
           .sort((a, b) => a - b),
         counter: counter + 1,
       };
