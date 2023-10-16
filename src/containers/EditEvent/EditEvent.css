@@ -1,0 +1,13 @@
+.createEvent {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+}
+
+.createEvent__input, .createEvent__datePicker {
+    margin-bottom: 16px;
+}
+
+.createEvent__datePicker {
+    width: 50%;
+}

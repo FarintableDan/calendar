@@ -1,0 +1,11 @@
+.baseLayout__layout {
+    min-height: 100vh;
+
+    padding: 24px;
+}
+
+.baseLayout__content {
+    background: #fff;
+
+    padding: 24px;
+}

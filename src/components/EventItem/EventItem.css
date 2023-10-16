@@ -1,0 +1,10 @@
+.event-item {
+    margin-bottom: 16px;
+    flex-wrap: nowrap;
+}
+
+.event-item__title {
+    margin-top: 0;
+    margin-bottom: 8px;
+    text-transform: capitalize;
+}

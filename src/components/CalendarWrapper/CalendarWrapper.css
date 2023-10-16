@@ -1,0 +1,11 @@
+.calendar-cell {
+    padding: 0;
+    margin: 0;
+}
+
+.calendar-cell__item {
+    overflow: hidden;
+
+    white-space: nowrap;
+    text-overflow: ellipsis;
+}
