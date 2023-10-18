@@ -2,6 +2,7 @@ import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Flex, Input, TimePicker } from "antd";
 import { useParams } from "react-router-dom";
+import dayjs from "dayjs";
 
 import { ConfirmPanel } from "../../components/ConfirmPanel/ConfirmPanel";
 import { editEvent } from "../../modules/actions";
@@ -21,6 +22,12 @@ export const EditEvent = ({ closeSidebar, editId }) => {
   const [title, setTitle] = useState(eventTitle);
   const [from, setFrom] = useState(eventFrom);
   const [to, setTo] = useState(eventTo);
+  const onChangeFrom = (date) => {
+    setFrom(date);
+    if (date > to) {
+      setTo(dayjs(date).add(1, "m"));
+    }
+  };
   const onChangeTo = (date) => {
     if (date < from) {
       return false;
@@ -49,7 +56,7 @@ export const EditEvent = ({ closeSidebar, editId }) => {
       />
       <TimePicker
         value={from}
-        onChange={(val) => setFrom(val)}
+        onChange={onChangeFrom}
         className="createEvent__datePicker"
         changeOnBlur
         allowClear={false}

@@ -16,6 +16,12 @@ export const CreateEvent = ({ closeSidebar }) => {
   const [title, setTitle] = useState("");
   const [from, setFrom] = useState(dayjs());
   const [to, setTo] = useState(dayjs().add(1, "h"));
+  const onChangeFrom = (date) => {
+    setFrom(date);
+    if (date > to) {
+      setTo(dayjs(date).add(1, "m"));
+    }
+  };
   const onChangeTo = (date) => {
     if (date < from) {
       return false;
@@ -46,7 +52,7 @@ export const CreateEvent = ({ closeSidebar }) => {
       />
       <TimePicker
         value={from}
-        onChange={(val) => setFrom(val)}
+        onChange={onChangeFrom}
         className="createEvent__datePicker"
         changeOnBlur
         allowClear={false}
