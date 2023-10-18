@@ -5,17 +5,17 @@ import { Flex, Input, TimePicker } from "antd";
 import dayjs from "dayjs";
 
 import { ConfirmPanel } from "../../components/ConfirmPanel/ConfirmPanel";
-import { addEvent, editEvent } from "../../modules/actions";
+import { addEvent } from "../../modules/actions";
 import { getSelectedDate } from "../../utils/helpers/date";
 
 import "./CreateEvent.css";
 
-export const CreateEvent = ({ closeSidebar, editId }) => {
+export const CreateEvent = ({ closeSidebar }) => {
   const dispatch = useDispatch();
   const { urlDate } = useParams();
   const [title, setTitle] = useState("");
   const [from, setFrom] = useState(dayjs());
-  const [to, setTo] = useState(dayjs());
+  const [to, setTo] = useState(dayjs().add(1, "h"));
   const onChangeTo = (date) => {
     if (date < from) {
       return false;
@@ -30,11 +30,8 @@ export const CreateEvent = ({ closeSidebar, editId }) => {
       from: getSelectedDate(urlDate, from),
       to: getSelectedDate(urlDate, to),
     };
-    if (editId) {
-      dispatch(editEvent(urlDate, data, editId));
-    } else {
-      dispatch(addEvent(urlDate, data));
-    }
+
+    dispatch(addEvent(urlDate, data));
 
     closeSidebar();
   };

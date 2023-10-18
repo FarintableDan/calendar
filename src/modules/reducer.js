@@ -1,8 +1,5 @@
-import dayjs from "dayjs";
-
 import * as types from "./constants";
-import { timeToGetNotification } from "../utils/helpers/date";
-import { spreadAll } from "../utils/helpers/spreadAll";
+import { mustAddNewNotification } from "../utils/helpers/mustAddNewNotification";
 
 const initialState = {
   counter: 1,
@@ -15,6 +12,7 @@ export default function mainReducer(state = initialState, { type, payload }) {
   const counter = state.counter;
   const keyDatePayload = payload?.keyDate;
   const currentDate = currentEventList?.[keyDatePayload] || [];
+  const notificationQue = state.notificationQue;
   switch (type) {
     case types.ADD_EVENT: {
       return {
@@ -26,12 +24,12 @@ export default function mainReducer(state = initialState, { type, payload }) {
             { ...payload.fullDate, id: counter },
           ],
         },
-        notificationQue: [
-          ...spreadAll(Object.values(currentDate)),
-          { ...payload.fullDate, id: counter },
-        ]
-          .filter((i) => timeToGetNotification(i.from) - timeToGetNotification(dayjs()) > 0)
-          .sort((a, b) => a - b),
+        notificationQue: mustAddNewNotification(
+          payload.fullDate.from,
+          payload.fullDate.to,
+        )
+          ? [...notificationQue, { ...payload.fullDate, id: counter }]
+          : notificationQue,
         counter: counter + 1,
       };
     }
@@ -51,8 +49,11 @@ export default function mainReducer(state = initialState, { type, payload }) {
         ...state,
         eventList: {
           ...currentEventList,
-          [keyDatePayload]: [...newEventList],
+          [keyDatePayload]: newEventList,
         },
+        notificationQue: state.notificationQue.filter(
+          (item) => item.id !== payload.id,
+        ),
       };
     }
     case types.EDIT_EVENT: {

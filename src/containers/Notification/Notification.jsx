@@ -3,7 +3,7 @@ import { useDispatch } from "react-redux";
 import { notification } from "antd";
 import dayjs from "dayjs";
 
-import { timeToGetNotification, toFormat } from "../../utils/helpers/date";
+import { getTimeDiff, toFormat } from "../../utils/helpers/date";
 import { removeFromNotificationQue } from "../../modules/actions";
 
 const DELAY_BEFORE_NOTIFICATION_REMOVE = -5;
@@ -11,9 +11,7 @@ const DELAY_BEFORE_NOTIFICATION_REMOVE = -5;
 export const Notification = ({ from, to, title, id }) => {
   const dispatch = useDispatch();
   const [api, contextHolder] = notification.useNotification();
-  const [timer, setTimer] = useState(
-    () => timeToGetNotification(from) - timeToGetNotification(dayjs()),
-  );
+  const [timer, setTimer] = useState(() => getTimeDiff(dayjs(), from));
 
   useEffect(() => {
     const interval = setInterval(() => {
